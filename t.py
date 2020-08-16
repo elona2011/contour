@@ -5,10 +5,10 @@ import time
 android = AndroidBase()
 android.PullScreenShot()
 
-screen = Screen()
-screen.findVideoBlock()
-screen.matchUserIcon()
-screen.clickLong()
+# screen = Screen()
+# screen.findVideoBlock()
+# screen.matchUserIcon()
+# screen.clickLong()
 # screen.clickLong()
 # r = screen.findComment()
 # if r:
