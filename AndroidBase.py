@@ -158,6 +158,7 @@ class AndroidBase():
         w, h = template.shape[::-1]
         # 比对操作
         res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
+        min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
         # 比对结果坐标
         loc = np.where(res >= self.threshold)
         # min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res) # 找到最大值和最小值
