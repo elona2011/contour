@@ -19,7 +19,7 @@ class Screen():
         comments = ('66666', '/:strong/:strong/:strong', '666/:strong/:strong/:strong', 'good/:strong/:strong/:strong', '/:sun/:sun/:sun', '[KeepFighting]')
         self.AndroidBase.Text(comments[randrange(len(comments))])
 
-    def sendReply(self):
+    # def sendReply(self):
         # replys = ('已完播点赞三连，请回我朋友圈第一条视频号', '已人工完播点赞评论，请回我朋友圈第一条视频', '已点赞评论三连，请回我朋友圈第一个视频')
         # self.AndroidBase.Text(replys[randrange(len(replys))])
 
