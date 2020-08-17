@@ -8,7 +8,10 @@ class Screen():
     def __init__(self):
         self.img = './Tmp01.png'
         self.img_rgb = cv2.imread(self.img)
+        self.img2 = cv2.imread(self.img)
         self.AndroidBase = AndroidBase()
+        self.width = self.AndroidBase.width
+        self.height = self.AndroidBase.height
         self.threshold = 0.7
         self.point = [0, 0]
 
@@ -27,15 +30,17 @@ class Screen():
 
     def findVideoBlock(self):
         self.getImg()
-        yes, loc = self.AndroidBase.MatchImg('./wechat/1080/videoText.png')
+        yes, loc = self.AndroidBase.MatchImg(
+            './wechat/'+str(self.width)+'/videoText.png')
 
         if yes:
+            print('找到视频号', loc)
             if loc[1] < self.AndroidBase.height/2:
                 self.AndroidBase.Rolling(
-                    loc[0], loc[1], loc[0], loc[1]+self.AndroidBase.height/3)
+                    loc[0], loc[1], loc[0], self.AndroidBase.height*4/5)
                 self.getImg()
                 yes, loc = self.AndroidBase.MatchImg(
-                    './wechat/1080/videoText.png')
+                    './wechat/'+str(self.width)+'/videoText.png')
 
             self.point = loc
             self.findUserIcon()
@@ -106,11 +111,15 @@ class Screen():
         # self.showImg(imgray)
         contours, hierarchy = cv2.findContours(
             imgray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        contours = [a for a in contours if a.size>40]
         self.contours = contours
         if len(contours) > 0:
             print("找到新消息群", contours[-1][0][0])
             self.point = contours[-1][0][0]
-            return True
+            if self.point[1] > self.height * 7 / 8:
+                return False
+            else:
+                return True
         else:
             return False
         # print('contours',(contours))
@@ -143,6 +152,9 @@ class Screen():
 
     def click(self):
         self.AndroidBase.OneClick(self.point[0]+8, self.point[1]+8)
+        cv2.rectangle(self.img2, (self.point[0],self.point[1]),
+                      (self.point[0] + 20, self.point[1] + 20), (7, 249, 151), 2)
+        cv2.imwrite("Tmp02.png", self.img2)
 
     def clickLong(self):
         self.AndroidBase.LongClick(self.point[0]+8, self.point[1]+8)
@@ -150,6 +162,7 @@ class Screen():
     def getImg(self):
         self.AndroidBase.PullScreenShot()
         self.img_rgb = cv2.imread(self.img)
+        self.img2 = cv2.imread(self.img)
 
     def addRect(self, loc, path):
         template = cv2.imread(path, 0)

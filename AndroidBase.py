@@ -80,8 +80,8 @@ class AndroidBase():
 
     # 上滑一半
     def RollingUpLittle(self):
-        self.Rolling(int(self.width/2), int(self.height/2),
-                     int(self.width/2), int(self.height/3))
+        self.Rolling(int(self.width/2), int(self.height*3/4),
+                     int(self.width/2), int(self.height*1/4))
 
     # 上滑屏幕
     def RollingUpScreen(self, step):
@@ -165,8 +165,13 @@ class AndroidBase():
         # print(cv2.minMaxLoc(res))
         # print(loc)
 
+        bottom_loc=None
         # 描绘出外框
         for pt in zip(*loc[::-1]):
+            if bottom_loc==None:
+                bottom_loc=pt
+            elif pt[1]>bottom_loc[1]:
+                bottom_loc=pt
             cv2.rectangle(
                 img_rgb, pt, (pt[0] + w, pt[1] + h), (7, 249, 151), 2)
         # 保存识别目标后的图
@@ -181,7 +186,7 @@ class AndroidBase():
                 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(
                     res)  # 找到最大值和最小值
                 #print (max_loc)
-                return True, max_loc
+                return True, bottom_loc
             else:
                 #print ("Empty")
                 return False, []

@@ -4,6 +4,8 @@ import time
 
 screen = Screen()
 android = AndroidBase()
+width = android.width
+
 
 def thumb():
     time.sleep(5)
@@ -19,49 +21,60 @@ def thumb():
             time.sleep(10)
             android.RollingUpLittle()
 
-            r = screen.findPng('./wechat/1080/thumbIcon.png')
+            r = screen.findPng('./wechat/'+str(width)+'/thumbIcon.png')
             if r:
-                # 点击thumb
+                print('点击thumb')
                 screen.click()
                 time.sleep(2)
-                r = screen.findPng('./wechat/1080/commentIcon.png')
+                r = screen.findPng('./wechat/'+str(width)+'/commentIcon.png')
                 if r:
-                    # 点击comment
+                    print('点击comment')
                     screen.click()
                     time.sleep(3)
                     screen.thumbComment()
                     time.sleep(2)
-                    r = screen.findPng('./wechat/1080/replyButton.png')
+                    r = screen.findPng('./wechat/'+str(width)+'/replyButton.png')
                     if r:
-                        # 发送评论
+                        print('发送评论')
                         screen.click()
                         time.sleep(3)
                         screen.return2()
                         r = screen.matchUserIcon()
                         if r:
-                            # 长按头像
+                            print('长按头像')
                             screen.clickLong()
                             time.sleep(3)
                             screen.sendReply()
                             time.sleep(3)
-                            r = screen.findPng('./wechat/1080/sendButton.png')
+                            r = screen.findPng('./wechat/'+str(width)+'/sendButton.png')
                             if r:
-                                # 发送回复
+                                print('发送回复')
                                 screen.click()
                                 time.sleep(3)
-                                screen.return1()
+                                screen.return2()
                     else:
                         screen.return4()
                 else:
                     screen.return2()
             else:
-                # 没找到，返回
+                print('没找到thumb，返回')
                 screen.return2()
         else:
             screen.return1()
 
-while True:
-    thumb()
-    thumb()
-    thumb()
-    time.sleep(30)
+if width != 1080 and width != 720:
+    print('分辨率'+str(width)+'，不支持，联系开发')
+else:
+    while True:
+        thumb()
+        thumb()
+        thumb()
+        thumb()
+        thumb()
+        thumb()
+        thumb()
+        thumb()
+
+        m=300
+        print('休息'+str(m)+'秒')
+        time.sleep(m)
