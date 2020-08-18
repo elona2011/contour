@@ -4,6 +4,7 @@ from AndroidBase import AndroidBase
 import time
 from random import randrange
 
+
 class Screen():
     def __init__(self):
         self.img = './Tmp01.png'
@@ -16,7 +17,8 @@ class Screen():
         self.point = [0, 0]
 
     def thumbComment(self):
-        comments = ('66666', '/:strong/:strong/:strong', '666/:strong/:strong/:strong', 'good/:strong/:strong/:strong', '/:sun/:sun/:sun', '[KeepFighting]')
+        comments = ('66666', '/:strong/:strong/:strong', '666/:strong/:strong/:strong',
+                    'good/:strong/:strong/:strong', '/:sun/:sun/:sun', '[KeepFighting]')
         self.AndroidBase.Text(comments[randrange(len(comments))])
 
     # def sendReply(self):
@@ -114,7 +116,7 @@ class Screen():
         # self.showImg(imgray)
         contours, hierarchy = cv2.findContours(
             imgray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-        contours = [a for a in contours if a.size>40]
+        contours = [a for a in contours if a.size > 40]
         self.contours = contours
         if len(contours) > 0:
             print("找到新消息群", contours[-1][0][0])
@@ -129,13 +131,33 @@ class Screen():
         # imgContour = cv2.drawContours(img, contours, -1, (0, 255, 0), 1)
         # self.showImg(imgContour)
 
+    def findFavoriteText(self):
+        self.getImg()
+        p = []
+        pre = 0
+        for i in range(self.height):
+            line = self.img_rgb[i]
+            num = 0
+            for n in line:
+                if n[0] == 237 and n[1] == 237 and n[2] == 237:
+                    num = num+1
+            if num < 100 and num < pre - 500:
+                p.append(i)
+            pre = num
+            if len(p)>4:
+                break
+        self.point = (500, p[1]+10)
+        return True
+
     def return1(self):
         self.AndroidBase.ClickReturn()
+        time.sleep(4)
 
     def return2(self):
         self.AndroidBase.ClickReturn()
         time.sleep(4)
         self.AndroidBase.ClickReturn()
+        time.sleep(4)
 
     def return3(self):
         self.AndroidBase.ClickReturn()
@@ -143,6 +165,7 @@ class Screen():
         self.AndroidBase.ClickReturn()
         time.sleep(4)
         self.AndroidBase.ClickReturn()
+        time.sleep(4)
 
     def return4(self):
         self.AndroidBase.ClickReturn()
@@ -152,12 +175,14 @@ class Screen():
         self.AndroidBase.ClickReturn()
         time.sleep(3.1)
         self.AndroidBase.ClickReturn()
+        time.sleep(4)
 
     def click(self):
         self.AndroidBase.OneClick(self.point[0]+8, self.point[1]+8)
-        cv2.rectangle(self.img2, (self.point[0],self.point[1]),
+        cv2.rectangle(self.img2, (self.point[0], self.point[1]),
                       (self.point[0] + 20, self.point[1] + 20), (7, 249, 151), 2)
         cv2.imwrite("Tmp02.png", self.img2)
+        time.sleep(3)
 
     def clickLong(self):
         self.AndroidBase.LongClick(self.point[0]+8, self.point[1]+8)

@@ -18,32 +18,55 @@ def thumb():
         r = screen.findVideoBlock()
         if r:
             screen.click()
-            time.sleep(10)
+            time.sleep(10) # 看视频
             android.RollingUpLittle()
 
             r = screen.findPng('./wechat/'+str(width)+'/thumbIcon.png')
             if r:
                 print('点击thumb')
                 screen.click()
-                time.sleep(2)
                 r = screen.findPng('./wechat/'+str(width)+'/commentIcon.png')
                 if r:
                     print('点击comment')
                     screen.click()
-                    time.sleep(3)
                     screen.thumbComment()
                     time.sleep(2)
                     r = screen.findPng('./wechat/'+str(width)+'/replyButton.png')
                     if r:
                         print('发送评论')
                         screen.click()
-                        time.sleep(3)
                         screen.return2()
+                        r = screen.findPng('./wechat/'+str(width)+'/plusButton.png')
+                        if r:
+                            print('点击plus')
+                            screen.click()
+                            r = screen.findPng('./wechat/'+str(width)+'/favoriteButton.png')
+                            if r:
+                                print('点击favorite')
+                                screen.click()
+                                r=screen.findFavoriteText()
+
+
+
+                            else:
+                                print('未找到favorite')
+                                screen.return1()
+                        else:
+                            print('未找到plus')
+                            screen.return1()
+
+
+
+
                         r = screen.matchUserIcon()
                         if r:
                             print('长按头像')
                             screen.clickLong()
                             time.sleep(3)
+                            
+                            
+
+
                             screen.sendReply()
                             time.sleep(3)
                             r = screen.findPng('./wechat/'+str(width)+'/sendButton.png')
