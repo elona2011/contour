@@ -12,19 +12,19 @@ if r:
     time.sleep(10)
     android.RollingUpLittle()
 
-    r = screen.findPng('./wechat/'+str(width)+'/thumbIcon.png')
+    r = screen.findPng('./wechat/'+str(android.width)+'/thumbIcon.png')
     if r:
         print('点击thumb')
         screen.click()
         time.sleep(2)
-        r = screen.findPng('./wechat/'+str(width)+'/commentIcon.png')
+        r = screen.findPng('./wechat/'+str(android.width)+'/commentIcon.png')
         if r:
             print('点击comment')
             screen.click()
             time.sleep(3)
             screen.thumbComment()
             time.sleep(2)
-            r = screen.findPng('./wechat/'+str(width)+'/replyButton.png')
+            r = screen.findPng('./wechat/'+str(android.width)+'/replyButton.png')
             if r:
                 print('发送评论')
                 screen.click()
@@ -37,7 +37,7 @@ if r:
                     time.sleep(3)
                     screen.sendReply()
                     time.sleep(3)
-                    r = screen.findPng('./wechat/'+str(width)+'/sendButton.png')
+                    r = screen.findPng('./wechat/'+str(android.width)+'/sendButton.png')
                     if r:
                         print('发送回复')
                         screen.click()

@@ -45,10 +45,16 @@ class AndroidBase():
     def Sleep(self, t):
         time.sleep(t)
 
+    # wx
+    def WX(self):
+        cmd = 'adb shell am start com.tencent.mm/com.tencent.mm.ui.LauncherUI'
+        # cmd = 'adb shell input text ' + str(txt)
+        self.SendCommand(cmd)
+
     # 文字
     def Text(self, txt):
-        cmd = 'adb shell am broadcast -a ADB_INPUT_TEXT --es msg ' + str(txt)
-        # cmd = 'adb shell input text ' + str(txt)
+        # cmd = 'adb shell am broadcast -a ADB_INPUT_TEXT --es msg ' + str(txt)
+        cmd = 'adb shell input text ' + str(txt)
         self.SendCommand(cmd)
 
     # 单击操作
@@ -60,7 +66,7 @@ class AndroidBase():
     def LongClick(self, x, y):
         cmd = 'adb shell input swipe ' + \
             str(x) + ' ' + str(y) + ' ' + str(x) + ' ' + str(y) + ' 2000'
-        print(cmd)
+        # print(cmd)
         self.SendCommand(cmd)
 
     # 双击操作

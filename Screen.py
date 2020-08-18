@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from AndroidBase import AndroidBase
 import time
-
+from random import randrange
 
 class Screen():
     def __init__(self):
@@ -16,10 +16,12 @@ class Screen():
         self.point = [0, 0]
 
     def thumbComment(self):
-        self.AndroidBase.Text('666')
+        comments = ('66666', '/:strong/:strong/:strong', '666/:strong/:strong/:strong', 'good/:strong/:strong/:strong', '/:sun/:sun/:sun', '[KeepFighting]')
+        self.AndroidBase.Text(comments[randrange(len(comments))])
 
     def sendReply(self):
-        self.AndroidBase.Text('已点赞评论三连，请回我朋友圈第一个视频')
+        # replys = ('已完播点赞三连，请回我朋友圈第一条视频号', '已人工完播点赞评论，请回我朋友圈第一条视频', '已点赞评论三连，请回我朋友圈第一个视频')
+        # self.AndroidBase.Text(replys[randrange(len(replys))])
 
     def findPng(self, png):
         self.getImg()
@@ -62,7 +64,7 @@ class Screen():
             elif num > preNum+30:
                 y1 = i
                 preNum = num
-            elif num < preNum - 30:
+            elif num < 20:
                 y0 = i
                 break
         img = self.img_rgb[y0:y1, 0:self.AndroidBase.width]
@@ -84,7 +86,8 @@ class Screen():
                 break
         self.PointUserIcon = [(x0+x1)/2, (y0+y1)/2]
         self.userIcon = self.img_rgb[y0:y1, x0:x1]
-        # self.showImg(self.userIcon)
+        cv2.imwrite("TmpUserIcon.png", self.userIcon)
+
         print(self.PointUserIcon)
 
     def matchUserIcon(self):

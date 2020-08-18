@@ -3,7 +3,7 @@ from AndroidBase import AndroidBase
 import time
 
 screen = Screen()
-android = AndroidBase()
+android = screen.AndroidBase
 width = android.width
 
 
@@ -52,29 +52,50 @@ def thumb():
                                 screen.click()
                                 time.sleep(3)
                                 screen.return2()
+                            else:
+                                print('未找到回复按钮')
+                                screen.return1()
+                        else:
+                            print('未找到用户头像')
+                            screen.return1()
                     else:
+                        print('没找到replyButton，返回')
                         screen.return4()
                 else:
+                    print('没找到comment，返回')
                     screen.return2()
             else:
                 print('没找到thumb，返回')
                 screen.return2()
         else:
+            print('没找到视频号')
             screen.return1()
+    else:
+        print('没找到红点')
 
 if width != 1080 and width != 720:
     print('分辨率'+str(width)+'，不支持，联系开发')
 else:
     while True:
-        thumb()
-        thumb()
-        thumb()
-        thumb()
-        thumb()
-        thumb()
-        thumb()
-        thumb()
-
-        m=300
-        print('休息'+str(m)+'秒')
-        time.sleep(m)
+        try:
+            thumb()
+            time.sleep(10)
+        except KeyboardInterrupt:
+            raise
+        except Exception as e:
+            print('出异常了，重启中。。。')
+            print(e)
+            time.sleep(5)
+            android.ClickReturn()
+            time.sleep(5)
+            android.ClickReturn()
+            time.sleep(5)
+            android.ClickReturn()
+            time.sleep(5)
+            android.ClickReturn()
+            time.sleep(5)
+            android.ClickReturn()
+            time.sleep(5)
+            android.WX()
+            time.sleep(10)
+        
