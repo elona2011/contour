@@ -6,11 +6,11 @@ from random import randrange
 
 
 class Screen():
-    def __init__(self):
+    def __init__(self,id):
         self.img = './Tmp01.png'
         self.img_rgb = cv2.imread(self.img)
         self.img2 = cv2.imread(self.img)
-        self.AndroidBase = AndroidBase()
+        self.AndroidBase = AndroidBase(id)
         self.width = self.AndroidBase.width
         self.height = self.AndroidBase.height
         self.threshold = 0.7
@@ -95,10 +95,14 @@ class Screen():
     def matchUserIcon(self):
         self.getImg()
         yes, loc = self.AndroidBase.MatchImg2(self.userIcon)
-        self.point = loc
+        if yes == False:
+            self.AndroidBase.Rolling(2, self.height/5, 2, self.height*4/5)
+            self.getImg()
+            yes, loc = self.AndroidBase.MatchImg2(self.userIcon)
+        if yes == True:
+            self.point = loc
         # self.addRect(loc, './wechat/1080/replyButton.png')
         return yes
-        print(yes, loc)
 
     def findRedPoint(self):
         self.getImg()
@@ -144,7 +148,7 @@ class Screen():
             if num < 100 and num < pre - 500:
                 p.append(i)
             pre = num
-            if len(p)>4:
+            if len(p) > 4:
                 break
         self.point = (500, p[1]+10)
         return True

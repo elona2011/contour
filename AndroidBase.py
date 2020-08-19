@@ -12,7 +12,8 @@ ScreenShotDetected = "Tmp02.png"
 
 
 class AndroidBase():
-    def __init__(self):
+    def __init__(self,id):
+        self.id = id
         self.GetScreenSize()
         # self.width = 1080
         # self.height = 1920
@@ -29,16 +30,16 @@ class AndroidBase():
     # 重新定向命令
     def SendCommand(self, command):
         # os.system(str)
-        result = subprocess.call(command, shell=True)
+        subprocess.call(command, shell=True)
         #result = os.popen(command)
         # result.wait()
         # self.LogPrint(str(result))
 
     # 截屏
     def PullScreenShot(self):
-        cmd = 'adb shell screencap -p /sdcard/' + ScreenShotFileName
+        cmd = 'adb -s ' + self.id + ' shell screencap -p /sdcard/' + ScreenShotFileName
         self.SendCommand(cmd)
-        cmd = 'adb pull /sdcard/' + ScreenShotFileName + ' .'
+        cmd = 'adb -s ' + self.id + ' pull /sdcard/' + ScreenShotFileName + ' .'
         self.SendCommand(cmd)
 
     # 延时，时间单位为秒
@@ -47,24 +48,24 @@ class AndroidBase():
 
     # wx
     def WX(self):
-        cmd = 'adb shell am start com.tencent.mm/com.tencent.mm.ui.LauncherUI'
+        cmd = 'adb -s ' + self.id + ' shell am start com.tencent.mm/com.tencent.mm.ui.LauncherUI'
         # cmd = 'adb shell input text ' + str(txt)
         self.SendCommand(cmd)
 
     # 文字
     def Text(self, txt):
         # cmd = 'adb shell am broadcast -a ADB_INPUT_TEXT --es msg ' + str(txt)
-        cmd = 'adb shell input text ' + str(txt)
+        cmd = 'adb -s ' + self.id + ' shell input text ' + str(txt)
         self.SendCommand(cmd)
 
     # 单击操作
     def OneClick(self, x, y):
-        cmd = 'adb shell input tap ' + str(x) + ' ' + str(y)
+        cmd = 'adb -s ' + self.id + ' shell input tap ' + str(x) + ' ' + str(y)
         self.SendCommand(cmd)
 
     # 长按
     def LongClick(self, x, y):
-        cmd = 'adb shell input swipe ' + \
+        cmd = 'adb -s ' + self.id + ' shell input swipe ' + \
             str(x) + ' ' + str(y) + ' ' + str(x) + ' ' + str(y) + ' 2000'
         # print(cmd)
         self.SendCommand(cmd)
@@ -75,12 +76,12 @@ class AndroidBase():
 
     # 返回按钮
     def ClickReturn(self):
-        cmd = 'adb shell input keyevent 4'
+        cmd = 'adb -s ' + self.id + ' shell input keyevent 4'
         self.SendCommand(cmd)
 
      # 滑动操作
     def Rolling(self, x1, y1, x2, y2):
-        cmd = 'adb shell input swipe ' + \
+        cmd = 'adb -s ' + self.id + ' shell input swipe ' + \
             str(x1) + ' ' + str(y1) + ' ' + str(x2) + ' ' + str(y2) + ' 2000'
         self.SendCommand(cmd)
 
@@ -107,7 +108,7 @@ class AndroidBase():
 
     # 点击电源键，点亮屏幕
     def LightScreen(self):
-        cmd = 'adb shell input keyevent 26'
+        cmd = 'adb -s ' + self.id + ' shell input keyevent 26'
         self.SendCommand(cmd)
 
     # 解锁屏幕
