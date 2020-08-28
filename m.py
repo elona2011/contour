@@ -4,6 +4,7 @@ from Task import Task
 import time
 import subprocess
 import threading
+import traceback
 
 cmd = 'adb devices'
 pi = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
@@ -40,6 +41,7 @@ def newtask(id):
             except Exception as e:
                 print('出异常了，重启中。。。')
                 print(e)
+                traceback.print_exc()
                 time.sleep(5)
                 task.android.ClickReturn()
                 time.sleep(5)
@@ -59,6 +61,9 @@ for n in rr:
     try:
         thread = myThread(n)
         thread.start()
+    except KeyboardInterrupt:
+        raise
     except Exception as e:
         print(e)
+        traceback.print_exc()
 

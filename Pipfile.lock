@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "42194fc56e15f2843e2fd175a4c4b0075ee1ad36f253fc4f2bcd7aa6ec9a6ba5"
+            "sha256": "c34159125a16da44e45ae00a973bc36d302b63ff338c9cebec2f03d07a028732"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -23,13 +23,12 @@
             ],
             "version": "==0.17"
         },
-        "macholib": {
+        "future": {
             "hashes": [
-                "sha256:0c436bc847e7b1d9bda0560351bf76d7caf930fb585a828d13608839ef42c432",
-                "sha256:c500f02867515e6c60a27875b408920d18332ddf96b4035ef03beddd782d4281"
+                "sha256:b1bead90b70cf6ec3f0710ae53a525360fa360d306a86583adc6bf83a4db537d"
             ],
-            "markers": "sys_platform == 'darwin'",
-            "version": "==1.14"
+            "markers": "python_version >= '2.6' and python_version not in '3.0, 3.1, 3.2, 3.3'",
+            "version": "==0.18.2"
         },
         "numpy": {
             "hashes": [
@@ -90,6 +89,13 @@
             "index": "pypi",
             "version": "==4.4.0.42"
         },
+        "pefile": {
+            "hashes": [
+                "sha256:a5d6e8305c6b210849b47a6174ddf9c452b2888340b8177874b862ba6c207645"
+            ],
+            "markers": "sys_platform == 'win32'",
+            "version": "==2019.4.18"
+        },
         "pyinstaller": {
             "hashes": [
                 "sha256:970beb07115761d5e4ec317c1351b712fd90ae7f23994db914c633281f99bab0"
@@ -103,6 +109,14 @@
                 "sha256:74936d044f319cd7a9dca322b46a818fcb6e2af1c67af62e8a6a3121eb2863d2"
             ],
             "version": "==2020.7"
+        },
+        "pywin32-ctypes": {
+            "hashes": [
+                "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942",
+                "sha256:9dc2d991b3479cc2df15930958b674a48a227d5361d413827a4cfd0b5876fc98"
+            ],
+            "index": "pypi",
+            "version": "==0.2.0"
         }
     },
     "develop": {
@@ -120,6 +134,14 @@
             ],
             "index": "pypi",
             "version": "==1.5.4"
+        },
+        "colorama": {
+            "hashes": [
+                "sha256:7d73d2a99753107a36ac6b455ee49046802e59d9d076ef8e47b61499fa29afff",
+                "sha256:e96da0d330793e2cb9485e9ddfd918d456036c7149416295932478192f4436a1"
+            ],
+            "markers": "sys_platform == 'win32'",
+            "version": "==0.4.3"
         },
         "isort": {
             "hashes": [

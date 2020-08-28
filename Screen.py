@@ -95,6 +95,7 @@ class Screen():
     def matchUserIcon(self):
         self.getImg()
         yes, loc = self.AndroidBase.MatchImg2(self.userIcon)
+        print(yes,loc)
         if yes == False:
             self.AndroidBase.Rolling(2, self.height/5, 2, self.height*4/5)
             self.getImg()
@@ -189,7 +190,8 @@ class Screen():
         time.sleep(3)
 
     def clickLong(self):
-        self.AndroidBase.LongClick(self.point[0]+8, self.point[1]+8)
+        print('long',self.point)
+        self.AndroidBase.LongClick(self.point[0]+28, self.point[1]+28)
 
     def getImg(self):
         self.AndroidBase.PullScreenShot()

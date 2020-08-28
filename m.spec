@@ -4,9 +4,9 @@ block_cipher = None
 
 
 a = Analysis(['m.py'],
-             pathex=['/Users/yanjie/Documents/git/contour'],
+             pathex=['C:\\Users\\jie\\Documents\\git\\automation\\contour'],
              binaries=[],
-             datas=[],
+             datas=[('wechat', 'wechat')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],

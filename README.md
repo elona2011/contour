@@ -1,0 +1,1 @@
+pyinstaller --add-data="wechat;wechat" -F m.py

@@ -66,7 +66,7 @@ class AndroidBase():
     # 长按
     def LongClick(self, x, y):
         cmd = 'adb -s ' + self.id + ' shell input swipe ' + \
-            str(x) + ' ' + str(y) + ' ' + str(x) + ' ' + str(y) + ' 2000'
+            str(x) + ' ' + str(y) + ' ' + str(x) + ' ' + str(y) + ' 3000'
         # print(cmd)
         self.SendCommand(cmd)
 
@@ -152,13 +152,24 @@ class AndroidBase():
         else:
             return False
 
+    def resource_path(self,relative_path):
+        """ Get absolute path to resource, works for dev and for PyInstaller """
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except Exception:
+            base_path = os.path.abspath(".")
+
+        return os.path.join(base_path, relative_path)
+
     # 找匹配图标
     def MatchImg(self, Target):
         # 原始图片
         img_rgb = cv2.imread(ScreenShotFileName)
         img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
         # 比对模板图片
-        temp_url = self.dir_root + "/" + Target
+        temp_url = self.resource_path(os.path.join(self.dir_root, Target))
+        # print(temp_url)
         # print(temp_url)
         template = cv2.imread(temp_url, 0)
         # 获取模板图片尺寸
@@ -216,9 +227,13 @@ class AndroidBase():
         # min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res) # 找到最大值和最小值
         # print(cv2.minMaxLoc(res))
         # print(loc)
-
+        bottom_loc=None
         # 描绘出外框
         for pt in zip(*loc[::-1]):
+            if bottom_loc==None:
+                bottom_loc=pt
+            elif pt[1]>bottom_loc[1]:
+                bottom_loc=pt
             cv2.rectangle(
                 img_rgb, pt, (pt[0] + w, pt[1] + h), (7, 249, 151), 2)
         # 保存识别目标后的图
@@ -233,7 +248,7 @@ class AndroidBase():
                 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(
                     res)  # 找到最大值和最小值
                 #print (max_loc)
-                return True, max_loc
+                return True, bottom_loc
             else:
                 #print ("Empty")
                 return False, []

@@ -45,7 +45,7 @@ class Task():
             r = self.screen.findVideoBlock()
             if r:
                 self.screen.click()
-                time.sleep(10)  # 看视频
+                time.sleep(15)  # 看视频
                 self.android.RollingUpLittle()
 
                 r = self.screen.findPng(
@@ -77,6 +77,7 @@ class Task():
                                     if r:
                                         self.android.OneClick(
                                             2, self.screen.height/4)
+                                        time.sleep(3)
                                         r = self.screen.matchUserIcon()
                                         if r:
                                             print('长按头像')
