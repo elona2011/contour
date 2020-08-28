@@ -10,6 +10,7 @@ autopep8 = "*"
 [packages]
 opencv-python = "*"
 pyinstaller = "*"
+requests = "*"
 
 [requires]
 python_version = "3.8"

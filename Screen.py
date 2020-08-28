@@ -3,10 +3,11 @@ import numpy as np
 from AndroidBase import AndroidBase
 import time
 from random import randrange
+import requests
 
-
+url_base = 'http://localhost:65028/'
 class Screen():
-    def __init__(self,id):
+    def __init__(self, id):
         self.img = './Tmp01.png'
         self.img_rgb = cv2.imread(self.img)
         self.img2 = cv2.imread(self.img)
@@ -106,31 +107,36 @@ class Screen():
 
     def findRedPoint(self):
         self.getImg()
-        hsv = cv2.cvtColor(self.img_rgb, cv2.COLOR_BGR2HSV)
+        url = url_base+'img/findActiveGroup/aaaa'
+        files = {'media': self.img_rgb}
+        r=requests.post(url, files=files)
+        print(r.status_code)
+        # hsv = cv2.cvtColor(self.img_rgb, cv2.COLOR_BGR2HSV)
 
-        lower_red0 = np.array([0, 160, 240])
-        upper_red0 = np.array([0, 175, 255])
-        lower_red1 = np.array([0, 160, 240])
-        upper_red1 = np.array([0, 175, 255])
+        # lower_red0 = np.array([0, 160, 240])
+        # upper_red0 = np.array([0, 175, 255])
+        # lower_red1 = np.array([0, 160, 240])
+        # upper_red1 = np.array([0, 175, 255])
 
-        mask0 = cv2.inRange(hsv, lower_red0, upper_red0)
-        mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
-        res = cv2.bitwise_and(self.img_rgb, self.img_rgb, mask=mask0 | mask1)
-        imgray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
-        # self.showImg(imgray)
-        contours, hierarchy = cv2.findContours(
-            imgray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-        contours = [a for a in contours if a.size > 40]
-        self.contours = contours
-        if len(contours) > 0:
-            print("找到新消息群", contours[-1][0][0])
-            self.point = contours[-1][0][0]
-            if self.point[1] > self.height * 7 / 8:
-                return False
-            else:
-                return True
-        else:
-            return False
+        # mask0 = cv2.inRange(hsv, lower_red0, upper_red0)
+        # mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+        # res = cv2.bitwise_and(self.img_rgb, self.img_rgb, mask=mask0 | mask1)
+        # imgray = cv2.cvtColor(res, cv2.COLOR_BGR2GRAY)
+        # # self.showImg(imgray)
+        # contours, hierarchy = cv2.findContours(
+        #     imgray, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        # contours = [a for a in contours if a.size > 40]
+        # self.contours = contours
+        # if len(contours) > 0:
+        #     print("找到新消息群", contours[-1][0][0])
+        #     self.point = contours[-1][0][0]
+        #     if self.point[1] > self.height * 7 / 8:
+        #         return False
+        #     else:
+        #         return True
+        # else:
+        #     return False
+
         # print('contours',(contours))
         # imgContour = cv2.drawContours(img, contours, -1, (0, 255, 0), 1)
         # self.showImg(imgContour)
